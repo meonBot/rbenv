@@ -39,8 +39,7 @@ RVM?**](https://github.com/rbenv/rbenv/wiki/Why-rbenv%3F)
   * [Choosing the Ruby Version](#choosing-the-ruby-version)
   * [Locating the Ruby Installation](#locating-the-ruby-installation)
 * [Installation](#installation)
-  * [Homebrew on macOS](#homebrew-on-macos)
-    * [Upgrading with Homebrew](#upgrading-with-homebrew)
+  * [Using Package Managers](#using-package-managers)
   * [Basic GitHub Checkout](#basic-github-checkout)
     * [Upgrading with Git](#upgrading-with-git)
     * [Updating the list of available Ruby versions](#updating-the-list-of-available-ruby-versions)
@@ -150,19 +149,37 @@ Version names to rbenv are simply the names of the directories in
   sure to fully uninstall RVM and remove any references to it from
   your shell initialization files before installing rbenv.
 
-### Homebrew on macOS
-
-If you're on macOS, we recommend installing rbenv with
-[Homebrew](https://brew.sh).
+### Using Package Managers
 
 1. Install rbenv.
+- **macOS**
+If you're on macOS, we recommend installing rbenv with
+[Homebrew](https://brew.sh).
 
     ~~~ sh
     $ brew install rbenv
     ~~~
-
+    
    Note that this also installs `ruby-build`, so you'll be ready to
    install other Ruby versions out of the box.
+   
+  - **Upgrading with Homebrew**
+
+    To upgrade to the latest rbenv and update ruby-build with newly released
+    Ruby versions, upgrade the Homebrew packages:
+
+    ~~~ sh
+    $ brew upgrade rbenv ruby-build
+    ~~~
+- **Debian, Ubuntu and their derivatives**
+    ~~~ sh
+    $ sudo apt install rbenv
+    ~~~
+- **Arch Linux and it's derivatives**
+
+  Archlinux has an [AUR Package](https://aur.archlinux.org/packages/rbenv/) for
+  rbenv and you can install it from the AUR using the instructions from this
+  [wiki page](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_and_upgrading_packages).
 
 2. Set up rbenv in your shell.
 
@@ -176,10 +193,10 @@ If you're on macOS, we recommend installing rbenv with
    effect.
 
 4. Verify that rbenv is properly set up using this
-   [rbenv-doctor](https://github.com/rbenv/rbenv-installer/blob/master/bin/rbenv-doctor) script:
+   [rbenv-doctor](https://github.com/rbenv/rbenv-installer/blob/main/bin/rbenv-doctor) script:
 
     ~~~ sh
-    $ curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+    $ curl -fsSL https://github.com/rbenv/rbenv-installer/raw/main/bin/rbenv-doctor | bash
     Checking for `rbenv' in PATH: /usr/local/bin/rbenv
     Checking for rbenv shims in PATH: OK
     Checking `rbenv install' support: /usr/local/bin/rbenv-install (ruby-build 20170523)
@@ -193,16 +210,6 @@ If you're on macOS, we recommend installing rbenv with
 5. That's it! Installing rbenv includes ruby-build, so now you're ready to
    [install some other Ruby versions](#installing-ruby-versions) using
    `rbenv install`.
-
-
-#### Upgrading with Homebrew
-
-To upgrade to the latest rbenv and update ruby-build with newly released
-Ruby versions, upgrade the Homebrew packages:
-
-~~~ sh
-$ brew upgrade rbenv ruby-build
-~~~
 
 
 ### Basic GitHub Checkout
@@ -236,9 +243,14 @@ a systemwide install.
      ~~~
      
    * For **Ubuntu Desktop**:
-     ~~~ bash
-     $ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-     ~~~
+   
+     In Ubuntu ~/.bash_profile is only sourced by bash when started in interactive login mode. 
+     That is typically only when you login at the console (Ctrl+Alt+F1..F6), or connecting via ssh.
+     This issue is explained in detail 
+     [here](https://askubuntu.com/questions/121073/why-bash-profile-is-not-getting-sourced-when-opening-a-terminal#121075).
+       ~~~ bash
+       $ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.profile
+       ~~~
      
    * For **Zsh**:
      ~~~ zsh
@@ -262,10 +274,10 @@ a systemwide install.
    terminal tab will usually do it.)
 
 5. Verify that rbenv is properly set up using this
-   [rbenv-doctor](https://github.com/rbenv/rbenv-installer/blob/master/bin/rbenv-doctor) script:
+   [rbenv-doctor](https://github.com/rbenv/rbenv-installer/blob/main/bin/rbenv-doctor) script:
 
     ~~~ sh
-    $ curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+    $ curl -fsSL https://github.com/rbenv/rbenv-installer/raw/main/bin/rbenv-doctor | bash
     Checking for `rbenv' in PATH: /usr/local/bin/rbenv
     Checking for rbenv shims in PATH: OK
     Checking `rbenv install' support: /usr/local/bin/rbenv-install (ruby-build 20170523)
@@ -413,9 +425,17 @@ uninstall from the system.
         rm -rf `rbenv root`
 
    If you've installed rbenv using a package manager, as a final step
-   perform the rbenv package removal. For instance, for Homebrew:
-
-        brew uninstall rbenv
+   perform the rbenv package removal.
+   - Homebrew:
+   
+        `brew uninstall rbenv`
+   - Debian, Ubuntu and their derivatives:
+        
+        `sudo apt purge rbenv`
+  
+   - Archlinux and it's derivatives:
+  
+          `sudo pacman -R rbenv`
 
 ## Command Reference
 
